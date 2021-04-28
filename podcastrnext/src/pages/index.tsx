@@ -127,7 +127,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get("episodes", {
     params: {
       _limit: 12,
-      _sort: "published_at",
+      _sort: "publishedAt",
       _order: "desc",
     },
   });
@@ -137,7 +137,7 @@ export const getStaticProps: GetStaticProps = async () => {
       id: episode.id,
       title: episode.title,
       members: episode.members,
-      publishedAt: format(parseISO(episode.published_at), "d MMM yy", {
+      publishedAt: format(parseISO(episode.publishedAt), "d MMM yy", {
         locale: ptBr,
       }),
       thumbnail: episode.thumbnail,

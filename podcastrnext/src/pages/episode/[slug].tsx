@@ -93,7 +93,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     id: data.id,
     title: data.title,
     members: data.members,
-    publishedAt: format(parseISO(data.published_at), "d MMM yy", {
+    publishedAt: format(parseISO(data.publishedAt), "d MMM yy", {
       locale: ptBr,
     }),
     thumbnail: data.thumbnail,

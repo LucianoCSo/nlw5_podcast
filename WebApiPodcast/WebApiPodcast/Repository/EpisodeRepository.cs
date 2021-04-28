@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +34,31 @@ namespace WebApiPodcast.Repository
 
                     return Slapper.AutoMapper.MapDynamic<Episodes>(response, false).ToList();
                 }
-                catch (Exception ex)
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        public async Task<Episodes> ListarEpisodios(string id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                try
+                {
+                    string sql = ScriptsPodecast.sqlId;
+                    var param = new DynamicParameters();
+                    param.Add("@id", id, DbType.String, ParameterDirection.Input);
+                    var response = await connection.QueryAsync<dynamic>(sql, param);
+                    Slapper.AutoMapper.Configuration.AddIdentifier(typeof(Episodes), "IdEpisodFile");
+                    Slapper.AutoMapper.Configuration.AddIdentifier(typeof(FileDet), "IdFile");
+
+                    return Slapper.AutoMapper.MapDynamic<Episodes>(response, false).FirstOrDefault();
+
+                }
+                catch
                 {
                     return null;
                 }

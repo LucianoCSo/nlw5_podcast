@@ -21,11 +21,27 @@ namespace WebApiPodcast.Controllers
 
         [HttpGet]
         [Route("episodes")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ListEpisodes()
         {
             try
             {
                 var response = await _episode.ListarEpisodios();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao tentar buscar lista de podecast");
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("episodes/{id}")]
+        public async Task<IActionResult> ListEpisodes(string id)
+        {
+            try
+            {
+                var response = await _episode.ListarEpisodios(id);
                 return Ok(response);
             }
             catch (Exception ex)

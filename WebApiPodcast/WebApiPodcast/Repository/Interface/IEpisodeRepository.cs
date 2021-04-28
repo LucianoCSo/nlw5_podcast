@@ -7,5 +7,6 @@ namespace WebApiPodcast.Repository.Interface
     public interface IEpisodeRepository
     {
         Task<IEnumerable<Episodes>> ListarEpisodios();
+        Task<Episodes> ListarEpisodios(string id);
     }
 }
