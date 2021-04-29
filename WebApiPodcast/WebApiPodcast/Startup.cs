@@ -20,11 +20,11 @@ namespace WebApiPodcast
 
         public void ConfigureServices(IServiceCollection services)
         {
-                
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Podecast", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Podecast", Version = "v1" });
             });
             services.AddSingleton<IEpisodeRepository, EpisodeRepository>();
             services.AddMvcCore();
@@ -35,9 +35,14 @@ namespace WebApiPodcast
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "WebApiPodcast v1"));
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Podcast v1");
+            });
 
             app.UseHttpsRedirection();
 
